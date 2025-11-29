@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +25,13 @@ public class ProductoController {
     @Autowired
     private ProductoRepository productoRepository;
 
-    // 1. Obtener todos los productos
+    // Obtener todos los productos
     @GetMapping
     public List<Producto> obtenerTodos() {
         return productoRepository.findAll();
     }
 
-    // 2. Obtener un producto por ID 
+    // Obtener un producto por ID 
     @GetMapping("/{id}")
     public ResponseEntity<Producto> obtenerPorId(@PathVariable Long id) {
         return productoRepository.findById(id)
@@ -37,15 +39,45 @@ public class ProductoController {
                 .orElse(ResponseEntity.notFound().build());
     }
     
-    // 3. Filtrar por categoría 
+    // Filtrar por categoría 
     @GetMapping("/categoria/{categoria}")
     public List<Producto> obtenerPorCategoria(@PathVariable String categoria) {
         return productoRepository.findByCategoria(categoria);
     }
 
-    // 4. Crear producto 
+    // Crear producto 
     @PostMapping
     public Producto crearProducto(@RequestBody Producto producto) {
         return productoRepository.save(producto);
     }
+    
+    // Actualizar Producto
+    @PutMapping("/{id}")
+    public ResponseEntity<Producto> actualizarProducto(@PathVariable Long id, @RequestBody Producto productoActualizado) {
+    return productoRepository.findById(id)
+            .map(producto -> {
+                producto.setNombre(productoActualizado.getNombre());
+                producto.setPrecio(productoActualizado.getPrecio());
+                producto.setDescripcion(productoActualizado.getDescripcion());
+                producto.setCategoria(productoActualizado.getCategoria());
+                producto.setImagen(productoActualizado.getImagen());
+
+                Producto actualizado = productoRepository.save(producto);
+                return ResponseEntity.ok(actualizado);
+            })
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Eliminar Producto
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> eliminarProducto(@PathVariable Long id) {
+    return productoRepository.findById(id)
+            .map(producto -> {
+                productoRepository.delete(producto);
+                return ResponseEntity.noContent().build(); // 204
+            })
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    
 }

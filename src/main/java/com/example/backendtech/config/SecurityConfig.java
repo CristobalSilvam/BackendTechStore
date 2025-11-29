@@ -85,6 +85,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/productos/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/api/productos/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/api/productos/**").hasAuthority("ADMIN")
+                .requestMatchers("/api/admin/usuarios/**").hasAuthority("ADMIN")
                 
                 // RESTO DE RUTAS 
                 .anyRequest().authenticated()

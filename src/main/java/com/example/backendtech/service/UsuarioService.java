@@ -1,5 +1,7 @@
 package com.example.backendtech.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,23 +16,41 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    // Esta herramienta encripta las contraseñas
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    // Método existente para REGISTRO (POST)
     public Usuario registrarUsuario(Usuario usuario) {
-        // 1. Encriptamos la contraseña antes de guardar
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        
-        // 2. Si no viene rol, le asignamos USER por defecto
         if (usuario.getRole() == null || usuario.getRole().isEmpty()) {
             usuario.setRole("USER"); 
         }
-        
         return usuarioRepository.save(usuario);
     }
     
-    // Método para buscar por email
+    // Método existente para LOGIN (GET)
     public Usuario buscarPorEmail(String email) {
         return usuarioRepository.findByEmail(email).orElse(null);
+    }
+
+    // LISTAR TODOS LOS USUARIOS (GET)
+    public List<Usuario> obtenerTodos() {
+        return usuarioRepository.findAll();
+    }
+
+    // ELIMINAR USUARIO (DELETE)
+    public void eliminarUsuario(Long id) {
+        usuarioRepository.deleteById(id);
+    }
+
+    // EDITAR ROL/NOMBRE DE USUARIO (PUT)
+    public Usuario actualizarUsuario(Long id, Usuario detallesUsuario) {
+        Usuario usuarioExistente = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Solo permitimos cambiar nombre y rol desde el panel admin
+        usuarioExistente.setNombre(detallesUsuario.getNombre());
+        usuarioExistente.setRole(detallesUsuario.getRole());
+        
+        return usuarioRepository.save(usuarioExistente);
     }
 }
