@@ -19,17 +19,19 @@ public class Producto {
     private String descripcion;
     private String imagen;
     private String categoria;
+    private Integer stock;
 
     // Constructor vacío 
     public Producto() {}
 
     // Constructor con datos
-    public Producto(String nombre, Double precio, String descripcion, String imagen, String categoria) {
+    public Producto(String nombre, Double precio, String descripcion, String imagen, String categoria, Integer stock) {
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.categoria = categoria;
+        this.stock = stock; 
     }
 
     // Getters y Setters
@@ -50,4 +52,7 @@ public class Producto {
     
     public String getCategoria() { return categoria; }
     public void setCategoria(String categoria) { this.categoria = categoria; }
+
+    public Integer getStock() { return stock; }
+    public void setStock(Integer stock) { this.stock = stock; }
 }
