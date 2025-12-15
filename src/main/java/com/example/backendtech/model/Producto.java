@@ -5,9 +5,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor; // Importa Data para getters, setters, equals, hashCode y toString
+import lombok.Data; // Importa NoArgsConstructor
+import lombok.NoArgsConstructor; // Importa AllArgsConstructor
 
 @Entity
 @Table(name = "productos")
+@Data // Genera automáticamente getters, setters, equals, hashCode, y toString
+@NoArgsConstructor // Genera el constructor sin argumentos
+@AllArgsConstructor // Genera el constructor con todos los argumentos
 public class Producto {
 
     @Id
@@ -17,42 +23,13 @@ public class Producto {
     private String nombre;
     private Double precio;
     private String descripcion;
-    private String imagen;
+    
+    // ESTE CAMPO ES DONDE SE GUARDA EL NOMBRE DE ARCHIVO ÚNICO
+    private String imagen; 
+    
     private String categoria;
     private Integer stock;
 
-    // Constructor vacío 
-    public Producto() {}
-
-    // Constructor con datos
-    public Producto(String nombre, Double precio, String descripcion, String imagen, String categoria, Integer stock) {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.imagen = imagen;
-        this.categoria = categoria;
-        this.stock = stock; 
-    }
-
-    // Getters y Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-
-    public Double getPrecio() { return precio; }
-    public void setPrecio(Double precio) { this.precio = precio; }
-
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-
-    public String getImagen() { return imagen; }
-    public void setImagen(String imagen) { this.imagen = imagen; }
-    
-    public String getCategoria() { return categoria; }
-    public void setCategoria(String categoria) { this.categoria = categoria; }
-
-    public Integer getStock() { return stock; }
-    public void setStock(Integer stock) { this.stock = stock; }
+    // Ya no necesitas escribir manualmente los Getters, Setters y Constructores
+    // La anotación @Data y @NoArgsConstructor/@AllArgsConstructor hacen el trabajo.
 }
