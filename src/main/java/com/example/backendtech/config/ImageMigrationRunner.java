@@ -15,7 +15,7 @@ import com.example.backendtech.repository.ProductoRepository;
 import com.example.backendtech.service.FileStorageService;
 
 //@Component
-public class ImageMigrationRunner implements CommandLineRunner {
+public class ImageMigrationRunner implements CommandLineRunner {    
 
     private final ProductoRepository productoRepository;
     private final FileStorageService fileStorageService;

@@ -1,5 +1,6 @@
 package com.example.backendtech.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,6 +9,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor; // Importa Data para getters, setters, equals, hashCode y toString
 import lombok.Data; // Importa NoArgsConstructor
 import lombok.NoArgsConstructor; // Importa AllArgsConstructor
+import jakarta.persistence.Lob;
 
 @Entity
 @Table(name = "productos")
@@ -30,6 +32,7 @@ public class Producto {
     private String categoria;
     private Integer stock;
 
-    // Ya no necesitas escribir manualmente los Getters, Setters y Constructores
-    // La anotación @Data y @NoArgsConstructor/@AllArgsConstructor hacen el trabajo.
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String especificaciones;
 }

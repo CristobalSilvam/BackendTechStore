@@ -39,9 +39,10 @@ public class ProductoService {
             String nombre, 
             Double precio, 
             String descripcion, 
-            MultipartFile imagen, // <-- Recibe el archivo
+            MultipartFile imagen, 
             String categoria, 
-            Integer stock) {
+            Integer stock,
+            String especificaciones) {
         
         Producto producto = new Producto();
         producto.setNombre(nombre);
@@ -49,6 +50,7 @@ public class ProductoService {
         producto.setDescripcion(descripcion);
         producto.setCategoria(categoria);
         producto.setStock(stock);
+        producto.setEspecificaciones(especificaciones); 
 
         // Lógica de archivo: Si se envió una imagen, la guardamos
         if (imagen != null && !imagen.isEmpty()) {
@@ -73,6 +75,7 @@ public class ProductoService {
         productoExistente.setPrecio(productoDetalles.getPrecio());
         productoExistente.setDescripcion(productoDetalles.getDescripcion());
         productoExistente.setCategoria(productoDetalles.getCategoria());
+        productoExistente.setEspecificaciones(productoDetalles.getEspecificaciones());
         
         if (productoDetalles.getStock() != null) {
             productoExistente.setStock(productoDetalles.getStock());

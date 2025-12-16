@@ -62,11 +62,12 @@ public class ProductoController {
             @RequestParam("descripcion") String descripcion,
             @RequestParam("categoria") String categoria,
             @RequestParam("stock") Integer stock,
+            @RequestParam(value = "especificaciones", required = false) String especificaciones,
             // @RequestPart se usa para recibir archivos en un form-data
             @RequestPart(value = "imagen", required = false) MultipartFile imagen) {
 
         Producto created = productoService.guardarProducto(
-                nombre, precio, descripcion, imagen, categoria, stock);
+                nombre, precio, descripcion, imagen, categoria, stock, especificaciones);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
@@ -81,6 +82,7 @@ public class ProductoController {
             @RequestParam("descripcion") String descripcion,
             @RequestParam("categoria") String categoria,
             @RequestParam("stock") Integer stock,
+            @RequestParam(value = "especificaciones", required = false) String especificaciones,
             @RequestPart(value = "imagen", required = false) MultipartFile nuevaImagen) {
 
         // Creamos un objeto Producto con los detalles recibidos para pasarlo al servicio
@@ -90,6 +92,7 @@ public class ProductoController {
         detalles.setDescripcion(descripcion);
         detalles.setCategoria(categoria);
         detalles.setStock(stock);
+        detalles.setEspecificaciones(especificaciones);
 
         Producto updated = productoService.actualizarProducto(id, detalles, nuevaImagen);
         return ResponseEntity.ok(updated);
